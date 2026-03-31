@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akhila Shastry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0ede8;
+    --muted: rgba(240,237,232,0.45);
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --blue: #335582;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* subtle grain overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--text); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-links {
+    display: flex; align-items: center;
+    gap: 0.25rem; list-style: none;
+  }
+  .nav-links a, .nav-links span {
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    padding: 0.4rem 0.85rem;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+    cursor: pointer; display: block;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+  .nav-links a.active { color: var(--accent); }
+  .nav-links .coming {
+    color: rgba(240,237,232,0.2);
+    cursor: default; position: relative;
+  }
+  .nav-links .coming:hover { background: transparent; color: rgba(240,237,232,0.2); }
+  .nav-links .soon-badge {
+    position: absolute; top: -6px; right: -2px;
+    font-size: 0.5rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-dim);
+    padding: 1px 4px; border-radius: 2px;
+    white-space: nowrap;
+  }
+  .nav-divider {
+    width: 1px; height: 14px;
+    background: var(--border); margin: 0 0.5rem;
+  }
+  .nav-links a.nav-contact {
+    color: var(--accent);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 0.35rem 0.85rem;
+  }
+  .nav-links a.nav-contact:hover {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 3rem 5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--accent);
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4.5rem, 11vw, 10rem);
+    font-weight: 300; line-height: 0.9;
+    letter-spacing: -0.01em;
+    margin-bottom: 2.5rem;
+  }
+  .hero-name .first {
+    display: block; color: var(--text);
+  }
+  .hero-name .last {
+    display: block; color: #335582;
+    font-style: italic; font-weight: 600;
+  }
+  .hero-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    margin-bottom: 2rem;
+  }
+  .hero-tagline {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300; color: var(--muted);
+    line-height: 1.8; max-width: 480px;
+    margin-bottom: 3.5rem;
+  }
+  .hero-tagline strong { color: var(--text); font-weight: 400; }
+
+  /* WORLDS GRID */
+  .worlds {
+    position: relative; z-index: 1;
+    padding: 0 3rem 7rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .worlds-label {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 2rem;
+  }
+  .worlds-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .world-tile {
+    background: var(--surface);
+    padding: 2rem 1.5rem;
+    text-decoration: none; color: inherit;
+    transition: background 0.3s;
+    display: block; position: relative;
+    overflow: hidden;
+  }
+  .world-tile:not(.world-coming):hover { background: rgba(201,169,110,0.06); }
+  .world-tile.world-coming { cursor: default; opacity: 0.4; }
+  .world-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 300;
+    color: rgba(201,169,110,0.2);
+    line-height: 1; margin-bottom: 1.5rem;
+  }
+  .world-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+  .world-c {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .world-arrow {
+    position: absolute; bottom: 1.5rem; right: 1.5rem;
+    font-size: 0.85rem; color: var(--accent);
+    opacity: 0; transition: opacity 0.2s, transform 0.2s;
+  }
+  .world-tile:not(.world-coming):hover .world-arrow {
+    opacity: 1; transform: translateX(3px);
+  }
+  .world-soon {
+    position: absolute; top: 1rem; right: 1rem;
+    font-size: 0.55rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-dim);
+    padding: 2px 6px; border-radius: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1;
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; color: rgba(240,237,232,0.25);
+  }
+  .footer-note {
+    font-size: 0.7rem; color: rgba(240,237,232,0.18);
+    letter-spacing: 0.08em;
+  }
+
+  /* COMING SOON TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.75rem 1.5rem; font-size: 0.82rem;
+    color: var(--muted); letter-spacing: 0.06em;
+    border-left: 2px solid var(--accent);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; z-index: 999; white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 0; }
+    .nav-links a, .nav-links span { padding: 0.4rem 0.55rem; font-size: 0.72rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .worlds { padding: 0 1.5rem 5rem; }
+    .worlds-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { padding: 1.25rem 1.5rem; }
+  }
+
+  @media (max-width: 560px) {
+    .worlds-grid { grid-template-columns: 1fr; }
+    .nav-links .coming .soon-badge { display: none; }
+  }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Akhila Shastry</a>
+  <ul class="nav-links">
+    <li><a href="professional.html" class="active">The Professional</a></li>
+    <li><span class="coming">The Athlete<span class="soon-badge">Soon</span></span></li>
+    <li><span class="coming">The Seeker<span class="soon-badge">Soon</span></span></li>
+    <li><span class="coming">The Curator<span class="soon-badge">Soon</span></span></li>
+    <li><span class="coming">The Entrepreneur<span class="soon-badge">Soon</span></span></li>
+    <li><div class="nav-divider"></div></li>
+    <li><a href="#about">About Me</a></li>
+    <li><a href="#contact" class="nav-contact">Contact Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow fade-in">One step at a time</div>
+  <h1 class="hero-name fade-in">
+    <span class="first">Akhila</span>
+    <span class="last">Shastry</span>
+  </h1>
+  <div class="hero-line fade-in"></div>
+  <p class="hero-tagline fade-in">
+    I build things.
+  </p>
+</div>
+
+<!-- WORLDS -->
+<div class="worlds">
+  <div class="worlds-label fade-in">My Worlds</div>
+  <div class="worlds-grid fade-in">
+
+    <a href="professional.html" class="world-tile">
+      <div class="world-num">01</div>
+      <div class="world-name">The Professional</div>
+      <div class="world-c">Competent</div>
+      <span class="world-arrow">→</span>
+    </a>
+
+    <div class="world-tile world-coming" onclick="showToast()">
+      <span class="world-soon">Coming soon</span>
+      <div class="world-num">02</div>
+      <div class="world-name">The Athlete</div>
+      <div class="world-c">Confident</div>
+    </div>
+
+    <div class="world-tile world-coming" onclick="showToast()">
+      <span class="world-soon">Coming soon</span>
+      <div class="world-num">03</div>
+      <div class="world-name">The Seeker</div>
+      <div class="world-c">Calm</div>
+    </div>
+
+    <div class="world-tile world-coming" onclick="showToast()">
+      <span class="world-soon">Coming soon</span>
+      <div class="world-num">04</div>
+      <div class="world-name">The Curator</div>
+      <div class="world-c">Clear</div>
+    </div>
+
+    <div class="world-tile world-coming" onclick="showToast()">
+      <span class="world-soon">Coming soon</span>
+      <div class="world-num">05</div>
+      <div class="world-name">The Entrepreneur</div>
+      <div class="world-c">Curious</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">This world is being built — check back soon.</div>
+
+<footer>
+  <div class="footer-name">Akhila Shastry</div>
+  <div class="footer-note">One step at a time · © 2025</div>
+</footer>
+
+<script>
+  // Fade in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Toast for coming soon
+  let toastTimer;
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+  }
+</script>
+</body>
+</html>

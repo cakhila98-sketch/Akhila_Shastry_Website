@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Professional — Akhila Shastry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #335582;
+    --grey-light: #e3e2e1;
+    --white: #fdfdfd;
+    --black: #0b0a0a;
+    --muted: #6b6760;
+    --rule: rgba(11,10,10,0.1);
+    --blue-light: rgba(51,85,130,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-back {
+    display: flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; color: var(--muted);
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--blue); }
+  .nav-back::before { content: '←'; font-size: 0.9rem; }
+  .nav-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--black); text-decoration: none;
+  }
+  .nav-cta {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--blue); text-decoration: none;
+    border-bottom: 1px solid var(--blue);
+    padding-bottom: 1px; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.7; }
+
+  /* HERO */
+  .hero {
+    padding: 7rem 3rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+  }
+  .hero-status {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-status::before {
+    content: ''; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--blue); display: block;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900; line-height: 0.95;
+    letter-spacing: -0.02em; margin-bottom: 1.75rem;
+  }
+  .hero-name .first { color: var(--blue); display: block; }
+  .hero-name .last { color: var(--black); font-style: italic; display: block; }
+  .hero-cta-line {
+    font-size: 0.9rem; font-weight: 300;
+    color: var(--muted); line-height: 1.7;
+  }
+  .hero-cta-line a {
+    color: var(--blue); font-weight: 500;
+    text-decoration: none; border-bottom: 1px solid var(--blue);
+    padding-bottom: 1px; transition: opacity 0.2s;
+  }
+  .hero-cta-line a:hover { opacity: 0.7; }
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+  .stat-card {
+    background: var(--grey-light);
+    padding: 1.5rem; border-left: 3px solid var(--blue);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900;
+    color: var(--blue); line-height: 1; margin-bottom: 0.25rem;
+  }
+  .stat-label {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* SECTION SHARED */
+  .section { padding: 5rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--black); margin-bottom: 0.75rem;
+  }
+  .section-rule { width: 36px; height: 2px; background: var(--blue); margin-bottom: 2.5rem; }
+
+  /* ── SHARED CAROUSEL SYSTEM ── */
+  .carousel-outer { position: relative; overflow: hidden; }
+  .carousel-track {
+    display: flex; gap: 1.5rem;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform;
+  }
+
+  /* Card shared styles */
+  .c-card {
+    flex-shrink: 0;
+    width: calc(33.333% - 1rem);
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 1.75rem;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .c-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--blue);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .c-card:hover::before,
+  .c-card.active::before { transform: scaleX(1); }
+  .c-card:hover,
+  .c-card.active { border-color: var(--blue); }
+
+  .card-period {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 0.5rem;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--black); margin-bottom: 0.3rem; line-height: 1.3;
+  }
+  .card-sub {
+    font-size: 0.83rem; color: var(--muted);
+    font-weight: 400; margin-bottom: 1rem; line-height: 1.5;
+  }
+  .card-tag {
+    display: inline-block;
+    font-size: 0.67rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.22rem 0.6rem;
+    background: var(--blue-light);
+    color: var(--blue); border-radius: 2px;
+    margin-right: 0.3rem; margin-bottom: 0.3rem;
+  }
+  .card-expand {
+    margin-top: 1.1rem;
+    font-size: 0.73rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--blue); display: flex; align-items: center; gap: 0.4rem;
+  }
+  .arrow { transition: transform 0.3s; display: inline-block; }
+  .c-card.active .arrow { transform: rotate(90deg); }
+
+  /* Carousel controls */
+  .carousel-controls {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-top: 1.5rem;
+  }
+  .carousel-dots { display: flex; gap: 0.5rem; }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--rule); cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    border: none; padding: 0;
+  }
+  .dot.active { background: var(--blue); transform: scale(1.3); }
+  .carousel-arrows { display: flex; gap: 0.75rem; }
+  .c-btn {
+    width: 36px; height: 36px;
+    border: 1px solid var(--rule); background: var(--white);
+    cursor: pointer; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s; color: var(--black);
+  }
+  .c-btn:hover { background: var(--blue); color: var(--white); border-color: var(--blue); }
+
+  /* Detail panel shared */
+  .detail-panel {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--blue);
+    border-top: 3px solid var(--blue);
+    padding: 2.5rem; margin-top: 1.5rem;
+    animation: fadeSlide 0.35s ease;
+  }
+  .detail-panel.open { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .detail-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .detail-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--black);
+  }
+  .detail-meta {
+    font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem;
+  }
+  .detail-context {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule);
+  }
+  .detail-close {
+    font-size: 0.73rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer;
+    border: 1px solid var(--rule); padding: 0.4rem 0.85rem;
+    background: none; font-family: 'DM Sans', sans-serif;
+    transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
+  }
+  .detail-close:hover { color: var(--blue); border-color: var(--blue); }
+  .detail-points { list-style: none; }
+  .detail-points li {
+    font-size: 0.91rem; color: var(--muted);
+    line-height: 1.8; padding-left: 1.25rem;
+    position: relative; margin-bottom: 0.45rem;
+  }
+  .detail-points li::before {
+    content: '—'; position: absolute; left: 0;
+    color: var(--blue); font-weight: 500;
+  }
+
+  /* Section backgrounds */
+  #workedat { background: var(--grey-light); }
+  #leadership { background: var(--white); }
+  #education { background: var(--grey-light); }
+
+  /* Education card specifics */
+  .edu-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--blue); margin-top: 0.5rem;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--black); color: var(--white); }
+  #contact .section-label { color: rgba(227,226,225,0.45); }
+  #contact .section-title { color: var(--white); }
+  #contact .section-rule { background: var(--blue); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .contact-body {
+    font-size: 1rem; color: rgba(227,226,225,0.6);
+    font-weight: 300; line-height: 1.9; margin-bottom: 1.25rem;
+  }
+  .contact-body strong { color: var(--white); font-weight: 500; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form select {
+    background: rgba(227,226,225,0.05);
+    border: 1px solid rgba(227,226,225,0.12);
+    padding: 0.85rem 1rem; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.2s; resize: vertical;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(227,226,225,0.3); }
+  .contact-form input:focus,
+  .contact-form textarea:focus,
+  .contact-form select:focus { border-color: var(--blue); }
+  .contact-form select option { background: var(--black); }
+  .contact-form textarea { min-height: 120px; }
+  .btn-send {
+    padding: 0.85rem 2rem; background: var(--blue);
+    color: var(--white); border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    align-self: flex-start;
+  }
+  .btn-send:hover { background: #254268; transform: translateY(-1px); }
+  .form-success {
+    display: none; padding: 1rem 1.25rem;
+    background: rgba(51,85,130,0.15);
+    border: 1px solid var(--blue);
+    font-size: 0.9rem; color: rgba(227,226,225,0.8);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 1.5rem 3rem; background: var(--black);
+    border-top: 1px solid rgba(227,226,225,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem; color: rgba(227,226,225,0.3);
+  }
+  .footer-note { font-size: 0.72rem; color: rgba(227,226,225,0.2); letter-spacing: 0.06em; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; gap: 2.5rem; padding: 6rem 1.5rem 3rem; }
+    .section { padding: 3.5rem 1.5rem; }
+    .c-card { width: 82%; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { padding: 1.25rem 1.5rem; }
+  }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">Home</a>
+  <a href="index.html" class="nav-name">Akhila Shastry</a>
+  <a href="#contact" class="nav-cta">Reach Out</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-status">Student at BITSoM · Mumbai</div>
+    <h1 class="hero-name">
+      <span class="first">Akhila</span>
+      <span class="last">Shastry</span>
+    </h1>
+    <p class="hero-cta-line">Grow, fix or build on your agenda? <a href="#contact">Reach out.</a></p>
+  </div>
+  <div class="hero-right">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">55+</div><div class="stat-label">Months experience</div></div>
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Industries</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WORKED AT -->
+<!-- ══════════════════════════════════════════ -->
+<section class="section" id="workedat">
+  <div class="section-inner">
+    <div class="section-label fade-in">Experience</div>
+    <h2 class="section-title fade-in">Worked at</h2>
+    <div class="section-rule fade-in"></div>
+
+    <div class="carousel-outer fade-in">
+      <div class="carousel-track" id="track-work">
+        <div class="c-card" onclick="toggle('work',0)">
+          <div class="card-period">Apr 2025 – Jun 2025</div>
+          <div class="card-title">Hindustan Times</div>
+          <div class="card-sub">HR Intern · HT Media</div>
+          <span class="card-tag">HR</span><span class="card-tag">Internship</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('work',1)">
+          <div class="card-period">Sep 2022 – Nov 2023</div>
+          <div class="card-title">YourDOST</div>
+          <div class="card-sub">Entrepreneur-in-Residence · Founder's Office</div>
+          <span class="card-tag">EdTech</span><span class="card-tag">Mental Health</span><span class="card-tag">GTM</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('work',2)">
+          <div class="card-period">Mar 2021 – Aug 2022</div>
+          <div class="card-title">Urban Company</div>
+          <div class="card-sub">Category Manager · Beauty & Wellness</div>
+          <span class="card-tag">E-Commerce</span><span class="card-tag">Category Launch</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('work',3)">
+          <div class="card-period">May 2019 – Feb 2021</div>
+          <div class="card-title">Hyperpure by Zomato</div>
+          <div class="card-sub">Key Account Manager · B2B Sales</div>
+          <span class="card-tag">B2B</span><span class="card-tag">Supply Chain</span><span class="card-tag">Sales</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('work',4)">
+          <div class="card-period">Nov 2018 – Jan 2019</div>
+          <div class="card-title">Hiring Studious</div>
+          <div class="card-sub">Intern · Recruitment</div>
+          <span class="card-tag">Recruitment</span><span class="card-tag">Internship</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('work',5)">
+          <div class="card-period">May 2018 – Jun 2018</div>
+          <div class="card-title">Reliance Industries</div>
+          <div class="card-sub">Vocational Trainee · HR</div>
+          <span class="card-tag">HR</span><span class="card-tag">Internship</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('work',6)">
+          <div class="card-period">Apr 2017 – May 2017</div>
+          <div class="card-title">Reliance Industries</div>
+          <div class="card-sub">Vocational Trainee · HR</div>
+          <span class="card-tag">HR</span><span class="card-tag">Internship</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-controls fade-in">
+      <div class="carousel-dots" id="dots-work"></div>
+      <div class="carousel-arrows">
+        <button class="c-btn" onclick="move('work',-1)">←</button>
+        <button class="c-btn" onclick="move('work',1)">→</button>
+      </div>
+    </div>
+
+    <!-- Detail panels -->
+    <div class="detail-panel" id="work-detail-0">
+      <div class="detail-header">
+        <div><div class="detail-title">Hindustan Times (HT Media)</div><div class="detail-meta">HR Intern · Apr 2025 – Jun 2025</div></div>
+        <button class="detail-close" onclick="closeDetail('work',0)">Close ✕</button>
+      </div>
+      <div class="detail-context">Induction & Capability Building</div>
+      <ul class="detail-points">
+        <li>Designed a standardised sales induction playbook, reducing ramp-up time from 6 months to 1 month with a structured knowledge repository.</li>
+        <li>Initiated a competency framework to define role-specific skills for capability building and talent decisions across the sales function.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="work-detail-1">
+      <div class="detail-header">
+        <div><div class="detail-title">YourDOST</div><div class="detail-meta">Entrepreneur-in-Residence · Sep 2022 – Nov 2023 · 14 months</div></div>
+        <button class="detail-close" onclick="closeDetail('work',1)">Close ✕</button>
+      </div>
+      <div class="detail-context">Founder's Office · Mental Health · New Initiatives</div>
+      <ul class="detail-points">
+        <li>Designed and launched the School Mental Health vertical — EdTech GTM, SaaS-like model — from zero. Won the Spotlight Award.</li>
+        <li>Cut turnaround time from 1.5 months to 10 days via workflow redesign for special-needs students; expanded reach from 7 to 30+ schools.</li>
+        <li>Piloted 20+ schools, exceeded Q2 sales target, and launched 6 new services to reach breakeven.</li>
+        <li>Led a 15+ member cross-functional team across age groups, expertise levels, and diverse professional backgrounds.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="work-detail-2">
+      <div class="detail-header">
+        <div><div class="detail-title">Urban Company</div><div class="detail-meta">Category Manager · Mar 2021 – Aug 2022 · 17 months</div></div>
+        <button class="detail-close" onclick="closeDetail('work',2)">Close ✕</button>
+      </div>
+      <div class="detail-context">E-Commerce · Beauty & Wellness · New City & Category Launch</div>
+      <ul class="detail-points">
+        <li>Launched Hair Botox with first-mover advantage in India — scaled to 20+ monthly orders at 4.89/5 rating.</li>
+        <li>Maintained highest NPS of 75+ for 8 consecutive months by building psychological safety and frontline training.</li>
+        <li>Drove 50% NPS growth in the pan-India central tracker within 2 months.</li>
+        <li>Onboarded 300+ partners using a data-driven acquisition strategy; achieved 100% city coverage in 2 months, 10K+ deliveries/month at 4.98 rating.</li>
+        <li>Built a scalable, replicable model for the beauty sector enabling seamless daily training with zero disruption.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="work-detail-3">
+      <div class="detail-header">
+        <div><div class="detail-title">Hyperpure by Zomato</div><div class="detail-meta">Key Account Manager · May 2019 – Feb 2021 · 21 months</div></div>
+        <button class="detail-close" onclick="closeDetail('work',3)">Close ✕</button>
+      </div>
+      <div class="detail-context">HoReCa Supply Chain · B2B Sales & Market Expansion</div>
+      <ul class="detail-points">
+        <li>Launched Hyperpure Mumbai — acquired 20+ key enterprise accounts in under 2 months during COVID-19's first wave.</li>
+        <li>Drove client acquisition and ABM by collaborating with 40+ Zomato KAMs across the city.</li>
+        <li>Conceptualised intake of caterers as clients to clear warehouse inventory and reduce wastage.</li>
+        <li>Built an enterprise dashboard enabling proactive closure of key revenue contracts and renewals.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="work-detail-4">
+      <div class="detail-header">
+        <div><div class="detail-title">Hiring Studious</div><div class="detail-meta">Intern · Nov 2018 – Jan 2019</div></div>
+        <button class="detail-close" onclick="closeDetail('work',4)">Close ✕</button>
+      </div>
+      <div class="detail-context">Recruitment & Events</div>
+      <ul class="detail-points">
+        <li>Achieved 20+ job placements via lead hiring across multiple roles and functions.</li>
+        <li>Emceed an HR conference with 30+ startup founders.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="work-detail-5">
+      <div class="detail-header">
+        <div><div class="detail-title">Reliance Industries (RIL)</div><div class="detail-meta">Vocational Trainee · May 2018 – Jun 2018</div></div>
+        <button class="detail-close" onclick="closeDetail('work',5)">Close ✕</button>
+      </div>
+      <div class="detail-context">HR · Leadership Development</div>
+      <ul class="detail-points">
+        <li>Assisted in mass hiring of 400+ candidates from cold calling through to interview coordination.</li>
+        <li>Conducted a benchmark study on leadership development, women-centric mentoring, and coaching programs.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="work-detail-6">
+      <div class="detail-header">
+        <div><div class="detail-title">Reliance Industries (RIL)</div><div class="detail-meta">Vocational Trainee · Apr 2017 – May 2017</div></div>
+        <button class="detail-close" onclick="closeDetail('work',6)">Close ✕</button>
+      </div>
+      <div class="detail-context">HR · Early Exposure</div>
+      <ul class="detail-points">
+        <li>First corporate exposure — observed and supported HR operations across recruitment and onboarding.</li>
+        <li>Developed foundational understanding of large-scale HR processes within a Fortune 500 organisation.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- LEADERSHIP & IMPACT -->
+<!-- ══════════════════════════════════════════ -->
+<section class="section" id="leadership">
+  <div class="section-inner">
+    <div class="section-label fade-in">Positions of Responsibility</div>
+    <h2 class="section-title fade-in">Leadership & Impact</h2>
+    <div class="section-rule fade-in"></div>
+
+    <div class="carousel-outer fade-in">
+      <div class="carousel-track" id="track-por">
+        <div class="c-card" onclick="toggle('por',0)">
+          <div class="card-period">2024 – 2025</div>
+          <div class="card-title">President, SSIC</div>
+          <div class="card-sub">Sustainability & Social Impact Club · BITSoM</div>
+          <span class="card-tag">Leadership</span><span class="card-tag">Social Impact</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('por',1)">
+          <div class="card-period">2019</div>
+          <div class="card-title">Toastmaster Mentor</div>
+          <div class="card-sub">Toastmasters International</div>
+          <span class="card-tag">Public Speaking</span><span class="card-tag">Mentoring</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('por',2)">
+          <div class="card-period">2018 – 2019</div>
+          <div class="card-title">Management Fest Team Head</div>
+          <div class="card-sub">Jain University</div>
+          <span class="card-tag">Events</span><span class="card-tag">Team Lead</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('por',3)">
+          <div class="card-period">2018</div>
+          <div class="card-title">TEDx Organiser</div>
+          <div class="card-sub">TEDx Jain University Edition</div>
+          <span class="card-tag">Events</span><span class="card-tag">Operations</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('por',4)">
+          <div class="card-period">2018</div>
+          <div class="card-title">Registration Head</div>
+          <div class="card-sub">Management Fest · Pan-India</div>
+          <span class="card-tag">Coordination</span><span class="card-tag">Data</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('por',5)">
+          <div class="card-period">2015</div>
+          <div class="card-title">Head Girl</div>
+          <div class="card-sub">Kokilaben Dhirubhai Ambani Vidyamandir</div>
+          <span class="card-tag">Leadership</span><span class="card-tag">School</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('por',6)">
+          <div class="card-period">2012 – 2016</div>
+          <div class="card-title">National Level Swimmer</div>
+          <div class="card-sub">CBSE National Swimming Championship</div>
+          <span class="card-tag">Athletics</span><span class="card-tag">Backstroke</span>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-controls fade-in">
+      <div class="carousel-dots" id="dots-por"></div>
+      <div class="carousel-arrows">
+        <button class="c-btn" onclick="move('por',-1)">←</button>
+        <button class="c-btn" onclick="move('por',1)">→</button>
+      </div>
+    </div>
+
+    <!-- Detail panels -->
+    <div class="detail-panel" id="por-detail-0">
+      <div class="detail-header">
+        <div><div class="detail-title">President, Sustainability & Social Impact Club</div><div class="detail-meta">BITSoM, Mumbai · 2024–2025 · 16-member team</div></div>
+        <button class="detail-close" onclick="closeDetail('por',0)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Led a 16-member team and launched 4 major initiatives including a mentorship program and corporate live projects for 21+ students.</li>
+        <li>Organised a campus-wide blood donation drive with 101+ attendees.</li>
+        <li>Spearheaded an educational mentorship program for support staff's children, reaching 70+ participants.</li>
+        <li>Hosted a knowledge series with leaders including Dr. Mukund Rajan and a Deloitte Sustainability Manager.</li>
+        <li>Built social media outreach for sustainability practices on campus.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="por-detail-1">
+      <div class="detail-header">
+        <div><div class="detail-title">Toastmaster Mentor</div><div class="detail-meta">Toastmasters International · 2019</div></div>
+        <button class="detail-close" onclick="closeDetail('por',1)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Mentored 35+ members in public speaking — from drafting speeches to delivery and stage presence.</li>
+        <li>Trained and guided 4 mentors on effective coaching methods, communication, and presentation skills.</li>
+        <li>Earned Competent Communicator and Competent Leader certifications.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="por-detail-2">
+      <div class="detail-header">
+        <div><div class="detail-title">Management Fest Team Head</div><div class="detail-meta">Jain University · 2018–2019 · 25+ member team</div></div>
+        <button class="detail-close" onclick="closeDetail('por',2)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Organised 1 cultural, 2 national, and 1 international management fest — led a 25+ member team across 15+ fests.</li>
+        <li>Managed sponsorships, logistics, and cross-functional coordination, ensuring 100% execution success.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="por-detail-3">
+      <div class="detail-header">
+        <div><div class="detail-title">TEDx Organiser</div><div class="detail-meta">TEDx Jain University Edition · 2018</div></div>
+        <button class="detail-close" onclick="closeDetail('por',3)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Served on the organising committee for TEDx Jain (University Edition).</li>
+        <li>Oversaw operations and speaker engagement end to end.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="por-detail-4">
+      <div class="detail-header">
+        <div><div class="detail-title">Registration Head</div><div class="detail-meta">Management Fest · 2018</div></div>
+        <button class="detail-close" onclick="closeDetail('por',4)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Led registrations across 15+ colleges out of 1,500 participants pan-India.</li>
+        <li>Streamlined databases and reporting for event tracking and coordination.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="por-detail-5">
+      <div class="detail-header">
+        <div><div class="detail-title">Head Girl</div><div class="detail-meta">Kokilaben Dhirubhai Ambani Vidyamandir · 2015</div></div>
+        <button class="detail-close" onclick="closeDetail('por',5)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Elected Head Girl — led a 25+ student committee and liaised between students and faculty for all school initiatives.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="por-detail-6">
+      <div class="detail-header">
+        <div><div class="detail-title">National Level Swimmer</div><div class="detail-meta">CBSE National Swimming Championship · 2012–2016 · Backstroke</div></div>
+        <button class="detail-close" onclick="closeDetail('por',6)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Participated in CBSE National Level Swimming Championship.</li>
+        <li>Secured 4th place in National IM Relay.</li>
+        <li>Earned Best Swimmer title — CBSE Saurashtra Zone.</li>
+        <li>Won ₹15,000 cash award at Khel Maha Kumbh competition.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- EDUCATION -->
+<!-- ══════════════════════════════════════════ -->
+<section class="section" id="education">
+  <div class="section-inner">
+    <div class="section-label fade-in">Academic background</div>
+    <h2 class="section-title fade-in">Education</h2>
+    <div class="section-rule fade-in"></div>
+
+    <div class="carousel-outer fade-in">
+      <div class="carousel-track" id="track-edu">
+        <div class="c-card" onclick="toggle('edu',0)">
+          <div class="card-period">2024 – 2026</div>
+          <div class="card-title">BITSoM</div>
+          <div class="card-sub">MBA · Marketing · Entrepreneurship · Innovation · Ecommerce</div>
+          <span class="card-tag">MBA</span><span class="card-tag">Mumbai</span>
+          <div class="edu-score">In progress</div>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('edu',1)">
+          <div class="card-period">2016 – 2019</div>
+          <div class="card-title">Jain University</div>
+          <div class="card-sub">BBA · Bachelor of Business Administration</div>
+          <span class="card-tag">BBA</span><span class="card-tag">Bangalore</span>
+          <div class="edu-score">8.3 / 10</div>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('edu',2)">
+          <div class="card-period">2016</div>
+          <div class="card-title">KDAV — 12th Standard</div>
+          <div class="card-sub">Kokilaben Dhirubhai Ambani Vidyamandir · CBSE · Jamnagar</div>
+          <span class="card-tag">CBSE</span><span class="card-tag">Science</span>
+          <div class="edu-score">91.2%</div>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+        <div class="c-card" onclick="toggle('edu',3)">
+          <div class="card-period">2014</div>
+          <div class="card-title">KDAV — 10th Standard</div>
+          <div class="card-sub">Kokilaben Dhirubhai Ambani Vidyamandir · CBSE · Jamnagar</div>
+          <span class="card-tag">CBSE</span>
+          <div class="edu-score">10 / 10</div>
+          <div class="card-expand">View detail <span class="arrow">›</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-controls fade-in">
+      <div class="carousel-dots" id="dots-edu"></div>
+      <div class="carousel-arrows">
+        <button class="c-btn" onclick="move('edu',-1)">←</button>
+        <button class="c-btn" onclick="move('edu',1)">→</button>
+      </div>
+    </div>
+
+    <!-- Detail panels -->
+    <div class="detail-panel" id="edu-detail-0">
+      <div class="detail-header">
+        <div><div class="detail-title">BITS School of Management (BITSoM)</div><div class="detail-meta">MBA · 2024–2026 · Mumbai</div></div>
+        <button class="detail-close" onclick="closeDetail('edu',0)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Specialisations: Marketing, Entrepreneurship, Innovation, Ecommerce.</li>
+        <li>President of the Sustainability & Social Impact Club — led 16-member team, organised 4 major initiatives.</li>
+        <li>Member of Shelf Indulgence book club.</li>
+        <li>Lean Six Sigma Green Belt certification — 2026.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="edu-detail-1">
+      <div class="detail-header">
+        <div><div class="detail-title">Jain Deemed-to-be University</div><div class="detail-meta">BBA · 2016–2019 · Bangalore · 8.3/10</div></div>
+        <button class="detail-close" onclick="closeDetail('edu',1)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Bachelor of Business Administration with strong academic performance.</li>
+        <li>Organised 1 cultural, 2 national and 1 international management fest as Team Head.</li>
+        <li>TEDx Jain organising committee member.</li>
+        <li>Registration Head for pan-India management fest covering 15+ colleges.</li>
+        <li>Toastmasters: Competent Communicator & Competent Leader certifications.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="edu-detail-2">
+      <div class="detail-header">
+        <div><div class="detail-title">Kokilaben Dhirubhai Ambani Vidyamandir</div><div class="detail-meta">12th Standard · CBSE · 2016 · Jamnagar · 91.2%</div></div>
+        <button class="detail-close" onclick="closeDetail('edu',2)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Scored 91.2% in CBSE Grade 12 board exams.</li>
+        <li>Elected Head Girl — led a 25+ student committee.</li>
+        <li>Earned Dhirubhai Ambani Scholarship on academic merit.</li>
+        <li>Silver memento for securing 1st Rank in Grade 12, CBSE.</li>
+        <li>All-Rounder 7th position out of 700 students — fully sponsored educational trip to Dubai.</li>
+      </ul>
+    </div>
+    <div class="detail-panel" id="edu-detail-3">
+      <div class="detail-header">
+        <div><div class="detail-title">Kokilaben Dhirubhai Ambani Vidyamandir</div><div class="detail-meta">10th Standard · CBSE · 2014 · Jamnagar · 10/10</div></div>
+        <button class="detail-close" onclick="closeDetail('edu',3)">Close ✕</button>
+      </div>
+      <ul class="detail-points">
+        <li>Scored a perfect 10/10 in CBSE Grade 10 board exams.</li>
+        <li>National Level Swimmer — CBSE Saurashtra Zone Best Swimmer title.</li>
+        <li>Won ₹15,000 cash award at Khel Maha Kumbh competition.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <div class="section-label">Let's connect</div>
+    <h2 class="section-title">Grow, fix or build<br>on your agenda?</h2>
+    <div class="section-rule"></div>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-body">I'm looking for roles where I can <strong>lead growth, fix what's broken, or build something new.</strong> If that sounds like what your organisation needs — startup, MNC, or anywhere in between — I'd love to talk.</p>
+      </div>
+      <div>
+        <form class="contact-form" id="contactForm">
+          <input type="text" placeholder="Your name" required>
+          <input type="email" placeholder="Your email" required>
+          <select>
+            <option value="" disabled selected>What's this about?</option>
+            <option>Full-time opportunity</option>
+            <option>Consulting / freelance project</option>
+            <option>Collaboration</option>
+            <option>Just saying hi</option>
+            <option>Others</option>
+          </select>
+          <textarea placeholder="Tell me more..."></textarea>
+          <button type="button" class="btn-send" onclick="sendForm()">Send message</button>
+        </form>
+        <div class="form-success" id="formSuccess">Thanks for reaching out. I'll get back to you soon.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Akhila Shastry — The Professional</div>
+  <div class="footer-note">One step at a time · © 2025</div>
+</footer>
+
+<script>
+  // FADE IN
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // CAROUSEL ENGINE
+  const carousels = {};
+
+  function initCarousel(id, total) {
+    carousels[id] = { current: 0, total, visible: 3, timer: null };
+    const max = Math.max(0, total - 3);
+    const dotsEl = document.getElementById('dots-' + id);
+    for (let i = 0; i <= max; i++) {
+      const d = document.createElement('button');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.onclick = () => goTo(id, i);
+      dotsEl.appendChild(d);
+    }
+    startAuto(id);
+    document.getElementById('track-' + id).addEventListener('mouseenter', () => stopAuto(id));
+    document.getElementById('track-' + id).addEventListener('mouseleave', () => startAuto(id));
+  }
+
+  function startAuto(id) {
+    stopAuto(id);
+    carousels[id].timer = setInterval(() => {
+      const c = carousels[id];
+      const max = Math.max(0, c.total - 3);
+      goTo(id, c.current >= max ? 0 : c.current + 1);
+    }, 3200);
+  }
+
+  function stopAuto(id) {
+    if (carousels[id] && carousels[id].timer) clearInterval(carousels[id].timer);
+  }
+
+  function goTo(id, i) {
+    const c = carousels[id];
+    c.current = i;
+    const track = document.getElementById('track-' + id);
+    const cardW = track.children[0].offsetWidth + 24;
+    track.style.transform = `translateX(-${i * cardW}px)`;
+    document.querySelectorAll('#dots-' + id + ' .dot').forEach((d, j) => d.classList.toggle('active', j === i));
+  }
+
+  function move(id, dir) {
+    const c = carousels[id];
+    const max = Math.max(0, c.total - 3);
+    goTo(id, Math.max(0, Math.min(max, c.current + dir)));
+  }
+
+  window.addEventListener('resize', () => {
+    Object.keys(carousels).forEach(id => goTo(id, carousels[id].current));
+  });
+
+  initCarousel('work', 7);
+  initCarousel('por', 7);
+  initCarousel('edu', 4);
+
+  // DETAIL PANEL TOGGLE
+  const activeDetail = {};
+
+  function toggle(section, i) {
+    const panelId = section + '-detail-' + i;
+    const panel = document.getElementById(panelId);
+    const cards = document.querySelectorAll('#track-' + section + ' .c-card');
+
+    if (activeDetail[section] !== undefined && activeDetail[section] !== i) {
+      document.getElementById(section + '-detail-' + activeDetail[section]).classList.remove('open');
+      cards[activeDetail[section]] && cards[activeDetail[section]].classList.remove('active');
+    }
+
+    if (panel.classList.contains('open')) {
+      panel.classList.remove('open');
+      cards[i] && cards[i].classList.remove('active');
+      delete activeDetail[section];
+    } else {
+      panel.classList.add('open');
+      cards[i] && cards[i].classList.add('active');
+      activeDetail[section] = i;
+      setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
+    }
+  }
+
+  function closeDetail(section, i) {
+    document.getElementById(section + '-detail-' + i).classList.remove('open');
+    const cards = document.querySelectorAll('#track-' + section + ' .c-card');
+    cards[i] && cards[i].classList.remove('active');
+    delete activeDetail[section];
+  }
+
+  // CONTACT
+  function sendForm() {
+    const form = document.getElementById('contactForm');
+    const name = form.querySelector('input[type="text"]').value;
+    const email = form.querySelector('input[type="email"]').value;
+    if (!name || !email) { alert('Please fill in your name and email.'); return; }
+    window.location.href = `mailto:cakhila98@gmail.com?subject=Hello from ${encodeURIComponent(name)}&body=From: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0A%0A`;
+    form.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>
