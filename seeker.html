@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Seeker — Akhila Shastry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060f0a;
+    --surface: #0d1f14;
+    --surface2: #112318;
+    --gold: #c9a96e;
+    --gold-dim: rgba(201,169,110,0.1);
+    --gold-line: rgba(201,169,110,0.25);
+    --text: #f0ede4;
+    --muted: rgba(240,237,228,0.5);
+    --border: rgba(201,169,110,0.15);
+    --rule: rgba(201,169,110,0.1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(201,169,110,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 60%, rgba(201,169,110,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 15%, rgba(201,169,110,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 75%, rgba(201,169,110,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 40%, rgba(201,169,110,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 80%, rgba(201,169,110,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 35%, rgba(201,169,110,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 55%, rgba(201,169,110,0.25) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(6,15,10,0.92);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-back {
+    display: flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; color: var(--muted);
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--gold); }
+
+  /* My Worlds Dropdown */
+  .nav-worlds { position: relative; }
+  .nav-worlds-btn {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); background: none; border: none;
+    font-family: 'Outfit', sans-serif; cursor: pointer;
+    transition: color 0.2s; padding: 0.4rem 0;
+  }
+  .nav-worlds-btn:hover { color: var(--gold); }
+  .nav-worlds-btn .chevron {
+    font-size: 0.6rem; transition: transform 0.2s; display: inline-block;
+  }
+  .nav-worlds-btn.open .chevron { transform: rotate(180deg); }
+  .worlds-dropdown {
+    display: none;
+    position: absolute; top: calc(100% + 0.75rem); left: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--gold);
+    min-width: 200px;
+    animation: fadeDown 0.2s ease;
+    z-index: 200;
+  }
+  .worlds-dropdown.open { display: block; }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .worlds-dropdown a,
+  .worlds-dropdown span {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem; font-weight: 400;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .worlds-dropdown a:last-child,
+  .worlds-dropdown span:last-child { border-bottom: none; }
+  .worlds-dropdown a:hover { background: var(--gold-dim); color: var(--gold); }
+  .worlds-dropdown span { color: rgba(240,237,228,0.25); cursor: default; }
+  .worlds-dropdown .soon {
+    font-size: 0.55rem; letter-spacing: 0.08em;
+    color: var(--gold); background: var(--gold-dim);
+    padding: 1px 5px; border-radius: 2px;
+  }
+  .worlds-dropdown a.current { color: var(--gold); }
+
+  .nav-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--text); letter-spacing: 0.06em;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .nav-book {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border: 1px solid var(--gold-line);
+    padding: 0.45rem 1.1rem;
+    transition: background 0.2s;
+    cursor: pointer; background: transparent;
+    font-family: 'Outfit', sans-serif;
+  }
+  .nav-book:hover { background: var(--gold-dim); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 3rem 5rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 600; line-height: 1.2;
+    color: var(--text); margin-bottom: 1.25rem;
+    max-width: 600px;
+  }
+  .hero-desc {
+    font-size: 0.95rem; font-weight: 300;
+    color: var(--muted); max-width: 480px;
+    line-height: 1.8; margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 2rem;
+    border: 1px solid var(--gold-line);
+    color: var(--gold); font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; background: transparent;
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.2s;
+  }
+  .hero-cta:hover { background: var(--gold-dim); }
+
+  /* ── SECTION SHARED ── */
+  .section-label {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; color: var(--text);
+    margin-bottom: 0.5rem; line-height: 1.1;
+  }
+  .section-rule { width: 36px; height: 1px; background: var(--gold-line); margin-bottom: 3rem; }
+
+  /* ── PRACTICES ── */
+  #practices {
+    position: relative; z-index: 1;
+    padding: 5rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .practice-card {
+    background: var(--surface);
+    padding: 2rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .practice-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .practice-card:hover::before { transform: scaleX(1); }
+  .practice-card:hover { background: var(--surface2); }
+  .practice-card.coming { cursor: default; opacity: 0.45; }
+  .practice-card.coming:hover { background: var(--surface); }
+  .practice-card.coming:hover::before { transform: scaleX(0); }
+  .practice-card.active { background: var(--surface2); }
+  .practice-card.active::before { transform: scaleX(1); }
+
+  .card-icon { font-size: 1.8rem; margin-bottom: 1.1rem; line-height: 1; }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.3rem;
+  }
+  .card-hint {
+    font-size: 0.68rem; font-weight: 400;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .card-preview {
+    font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+  }
+  .card-expand {
+    margin-top: 1.1rem;
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); display: flex; align-items: center; gap: 0.4rem;
+  }
+  .card-arrow { transition: transform 0.3s; display: inline-block; }
+  .practice-card.active .card-arrow { transform: rotate(90deg); }
+  .coming-badge {
+    display: inline-block; margin-top: 0.75rem;
+    font-size: 0.58rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); background: var(--gold-dim);
+    padding: 2px 7px; border-radius: 2px;
+  }
+
+  /* ── DETAIL PANELS ── */
+  .practice-detail {
+    display: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--gold);
+    padding: 2.5rem; margin-top: 1px;
+    animation: fadeSlide 0.3s ease;
+  }
+  .practice-detail.open { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .detail-inner { max-width: 640px; }
+  .detail-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.25rem;
+  }
+  .detail-tag {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.25rem; display: block;
+  }
+  .detail-body {
+    font-size: 0.9rem; color: var(--muted);
+    line-height: 1.9; margin-bottom: 1.5rem;
+  }
+  .detail-book {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--gold-line);
+    color: var(--gold); font-size: 0.75rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; background: transparent;
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.2s; margin-bottom: 1.25rem;
+    display: block; width: fit-content;
+  }
+  .detail-book:hover { background: var(--gold-dim); }
+  .detail-close {
+    font-size: 0.68rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer;
+    border: 1px solid var(--rule); padding: 0.35rem 0.85rem;
+    background: none; font-family: 'Outfit', sans-serif;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .detail-close:hover { color: var(--gold); border-color: var(--gold-line); }
+
+  /* ── BOOK MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(6,15,10,0.92);
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    padding: 3rem; max-width: 400px; width: 90%;
+    text-align: center;
+    animation: fadeUp 0.3s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.5rem;
+  }
+  .modal-sub {
+    font-size: 0.83rem; color: var(--muted);
+    line-height: 1.7; margin-bottom: 2.5rem;
+  }
+  .modal-options { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+  .modal-btn {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--border);
+    text-decoration: none; color: var(--text);
+    font-size: 0.88rem; transition: background 0.2s, border-color 0.2s;
+    background: transparent;
+  }
+  .modal-btn:hover { background: var(--gold-dim); border-color: var(--gold-line); }
+  .modal-btn-icon { font-size: 1.2rem; }
+  .modal-btn-label { font-weight: 500; display: block; font-size: 0.88rem; text-align: left; }
+  .modal-btn-num { font-size: 0.75rem; color: var(--muted); display: block; text-align: left; }
+  .modal-close {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer;
+    background: none; border: none;
+    font-family: 'Outfit', sans-serif; transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--gold); }
+
+  /* ── ABOUT STRIP ── */
+  #about {
+    position: relative; z-index: 1;
+    padding: 6rem 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .about-img-wrap { position: relative; }
+  .about-img-placeholder {
+    width: 100%; aspect-ratio: 3/4;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.75rem;
+  }
+  .about-img-placeholder span { font-size: 3rem; opacity: 0.2; }
+  .about-img-placeholder p {
+    font-size: 0.68rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .about-tagline {
+    position: absolute; bottom: -1.5rem; left: -1.5rem;
+    background: var(--bg); border: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+  }
+  .about-tagline-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 400;
+    font-style: italic; color: var(--gold); line-height: 1.3;
+  }
+  .about-tagline-sub {
+    font-size: 0.62rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted); margin-top: 0.3rem;
+  }
+  .about-label {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300; color: var(--text);
+    line-height: 1.2; margin-bottom: 1.5rem;
+  }
+  .about-text {
+    font-size: 0.9rem; color: var(--muted); line-height: 1.9;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; color: rgba(240,237,228,0.22);
+  }
+  .footer-note { font-size: 0.68rem; color: rgba(240,237,228,0.18); letter-spacing: 0.08em; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    #practices { padding: 4rem 1.5rem; }
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    #about { padding: 4rem 1.5rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about-tagline { position: static; margin-top: 1rem; }
+    footer { padding: 1.25rem 1.5rem; }
+  }
+  @media (max-width: 560px) {
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">← Back Home</a>
+
+  <div class="nav-title">The Seeker · Calm</div>
+
+  <div class="nav-worlds">
+    <button class="nav-worlds-btn" onclick="toggleWorldsMenu()" id="worldsBtn">
+      My Worlds <span class="chevron">▾</span>
+    </button>
+    <div class="worlds-dropdown" id="worldsMenu">
+      <a href="professional.html">The Professional</a>
+      <span>The Athlete <span class="soon">Soon</span></span>
+      <a href="seeker.html" style="color: var(--gold);">The Seeker ✦</a>
+      <span>The Curator <span class="soon">Soon</span></span>
+      <span>The Entrepreneur <span class="soon">Soon</span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow fade-in">The Seeker · Calm</div>
+  <h1 class="hero-title fade-in">Experience The Healing Power of Reiki</h1>
+  <p class="hero-desc fade-in">Reiki is a gentle Japanese energy healing practice that restores balance, reduces stress, and reconnects you to your inner calm — one session at a time.</p>
+  <button class="hero-cta fade-in" onclick="openModal()">✦ Book a Reiki Session</button>
+</div>
+
+<!-- PRACTICES -->
+<section id="practices">
+  <div class="section-label fade-in">Inner practices</div>
+  <h2 class="section-title fade-in">The worlds within</h2>
+  <div class="section-rule fade-in"></div>
+
+  <div class="cards-grid fade-in">
+
+    <div class="practice-card" id="card-0" onclick="toggleCard(0)">
+      <div class="card-icon">🌿</div>
+      <div class="card-name">Reiki</div>
+      <div class="card-hint">Energy Healing</div>
+      <p class="card-preview">A Japanese healing practice that channels life energy to restore balance and calm.</p>
+      <div class="card-expand">View detail <span class="card-arrow">›</span></div>
+    </div>
+
+    <div class="practice-card" id="card-1" onclick="toggleCard(1)">
+      <div class="card-icon">◎</div>
+      <div class="card-name">Chakra Meditation</div>
+      <div class="card-hint">Inner Balance</div>
+      <p class="card-preview">Working with the body's energy centres to find stillness and restore flow.</p>
+      <div class="card-expand">View detail <span class="card-arrow">›</span></div>
+    </div>
+
+    <div class="practice-card" id="card-2" onclick="toggleCard(2)">
+      <div class="card-icon">🕯</div>
+      <div class="card-name">Vipassana</div>
+      <div class="card-hint">Insight Meditation</div>
+      <p class="card-preview">Ten days of silence that changed the way I understand myself and the world.</p>
+      <div class="card-expand">View detail <span class="card-arrow">›</span></div>
+    </div>
+
+    <div class="practice-card coming">
+      <div class="card-icon">🛕</div>
+      <div class="card-name">Temple Tales</div>
+      <div class="card-hint">Stories & Travels</div>
+      <p class="card-preview">Visits, observations, and what sacred spaces have taught me.</p>
+      <div><span class="coming-badge">Coming Soon</span></div>
+    </div>
+
+    <div class="practice-card coming">
+      <div class="card-icon">✦</div>
+      <div class="card-name">Astrology</div>
+      <div class="card-hint">Cosmic Patterns</div>
+      <p class="card-preview">Learning to read the sky and find meaning in patterns larger than ourselves.</p>
+      <div><span class="coming-badge">Coming Soon</span></div>
+    </div>
+
+  </div>
+
+  <!-- Detail Panels -->
+  <div class="practice-detail" id="detail-0">
+    <div class="detail-inner">
+      <div class="detail-name">Reiki</div>
+      <span class="detail-tag">Energy Healing · Level 2 Practitioner</span>
+      <p class="detail-body">Reiki is a Japanese technique for stress reduction and relaxation that also promotes healing. As a Level 2 practitioner, I offer distance sessions that begin with a conversation — I want to understand what you're carrying before we begin. Sessions are 45 minutes and conducted online. Many people leave feeling lighter, more grounded, and clearer than when they came in.</p>
+      <button class="detail-book" onclick="openModal()">✦ Book a Session</button>
+      <button class="detail-close" onclick="closeCard(0)">Close ✕</button>
+    </div>
+  </div>
+
+  <div class="practice-detail" id="detail-1">
+    <div class="detail-inner">
+      <div class="detail-name">Chakra Meditation</div>
+      <span class="detail-tag">Inner Balance · Daily Practice</span>
+      <p class="detail-body">The chakra system maps the body's seven energy centres — from root to crown. Through guided meditation and breathwork, I work with these centres daily to maintain emotional and energetic balance. It is a practice of coming home to the body, of learning to listen to what it is already telling you. Slow, intentional, and deeply grounding.</p>
+      <button class="detail-close" onclick="closeCard(1)">Close ✕</button>
+    </div>
+  </div>
+
+  <div class="practice-detail" id="detail-2">
+    <div class="detail-inner">
+      <div class="detail-name">Vipassana</div>
+      <span class="detail-tag">Insight Meditation · 10-Day Retreat · 2024</span>
+      <p class="detail-body">In 2024, I sat a 10-day Vipassana silent meditation retreat. No phone, no speaking, no distractions — just the mind and its contents. It was one of the most challenging and clarifying experiences of my life. The technique, as taught by S.N. Goenka, is simple: observe reality as it is, not as you want it to be. I returned with a daily practice that has not left me since.</p>
+      <button class="detail-close" onclick="closeCard(2)">Close ✕</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ABOUT STRIP -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap fade-in">
+      <div class="about-img-placeholder">
+        <span>☽</span>
+        <p>Your photo here</p>
+      </div>
+      <div class="about-tagline">
+        <div class="about-tagline-text">Abhyas aur Vairagya</div>
+        <div class="about-tagline-sub">Practice & Detachment</div>
+      </div>
+    </div>
+    <div class="fade-in">
+      <div class="about-label">The Seeker</div>
+      <h3 class="about-heading">The inner work<br>is the real work.</h3>
+      <p class="about-text">I came to these practices not from curiosity alone, but from necessity. There were seasons in my life where the external tools — strategy, execution, results — were not enough. Reiki, meditation, and Vipassana became the foundation everything else is built on. I am not an expert. I am a practitioner — someone who shows up to the mat, the cushion, and the silence, every day. This page is where I document that journey, honestly and without performance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Akhila Shastry — The Seeker</div>
+  <div class="footer-note">One step at a time · © 2025</div>
+</footer>
+
+<!-- BOOK MODAL -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal">
+    <div class="modal-title">Book a Session</div>
+    <p class="modal-sub">Choose how you'd like to reach out. I'll confirm your session shortly.</p>
+    <div class="modal-options">
+      <a href="tel:+918320865698" class="modal-btn">
+        <span class="modal-btn-icon">📞</span>
+        <span>
+          <span class="modal-btn-label">Call directly</span>
+          <span class="modal-btn-num">+91 83208 65698</span>
+        </span>
+      </a>
+      <a href="https://wa.me/918320865698?text=Hi%20Akhila%2C%20I%20would%20like%20to%20book%20a%20Reiki%20session." target="_blank" class="modal-btn">
+        <span class="modal-btn-icon">💬</span>
+        <span>
+          <span class="modal-btn-label">Message on WhatsApp</span>
+          <span class="modal-btn-num">+91 83208 65698</span>
+        </span>
+      </a>
+    </div>
+    <button class="modal-close" onclick="closeModal()">Close ✕</button>
+  </div>
+</div>
+
+<script>
+  // FADE IN
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // WORLDS DROPDOWN
+  function toggleWorldsMenu() {
+    const menu = document.getElementById('worldsMenu');
+    const btn = document.getElementById('worldsBtn');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.querySelector('.nav-worlds');
+    if (!nav.contains(e.target)) {
+      document.getElementById('worldsMenu').classList.remove('open');
+      document.getElementById('worldsBtn').classList.remove('open');
+    }
+  });
+
+  // MODAL
+  function openModal() {
+    document.getElementById('bookModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('bookModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('bookModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // CARD TOGGLE
+  let activeCard = null;
+  function toggleCard(i) {
+    const detail = document.getElementById('detail-' + i);
+    const card = document.getElementById('card-' + i);
+    if (activeCard !== null && activeCard !== i) {
+      document.getElementById('detail-' + activeCard).classList.remove('open');
+      document.getElementById('card-' + activeCard).classList.remove('active');
+    }
+    if (detail.classList.contains('open')) {
+      detail.classList.remove('open');
+      card.classList.remove('active');
+      activeCard = null;
+    } else {
+      detail.classList.add('open');
+      card.classList.add('active');
+      activeCard = i;
+      setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
+    }
+  }
+  function closeCard(i) {
+    document.getElementById('detail-' + i).classList.remove('open');
+    document.getElementById('card-' + i).classList.remove('active');
+    activeCard = null;
+  }
+</script>
+</body>
+</html>
