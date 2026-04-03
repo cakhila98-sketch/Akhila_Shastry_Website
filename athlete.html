@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Athlete — Akhila Shastry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1a1a24;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.1);
+    --accent-line: rgba(201,169,110,0.2);
+    --text: #f0ede8;
+    --muted: rgba(240,237,232,0.5);
+    --border: rgba(240,237,232,0.08);
+    --rule: rgba(240,237,232,0.05);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(201,169,110,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(10,10,15,0.92);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-back {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--accent); }
+  .nav-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--text); letter-spacing: 0.06em;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .nav-worlds { position: relative; }
+  .nav-worlds-btn {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); background: none; border: none;
+    font-family: 'Outfit', sans-serif; cursor: pointer;
+    transition: color 0.2s; padding: 0.4rem 0;
+  }
+  .nav-worlds-btn:hover { color: var(--accent); }
+  .nav-worlds-btn .chevron { font-size: 0.6rem; transition: transform 0.2s; }
+  .nav-worlds-btn.open .chevron { transform: rotate(180deg); }
+  .worlds-dropdown {
+    display: none;
+    position: absolute; top: calc(100% + 0.75rem); right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--accent);
+    min-width: 200px;
+    animation: fadeDown 0.2s ease;
+    z-index: 200;
+  }
+  .worlds-dropdown.open { display: block; }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .worlds-dropdown a,
+  .worlds-dropdown span {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.2s, color 0.2s; cursor: pointer;
+  }
+  .worlds-dropdown a:last-child,
+  .worlds-dropdown span:last-child { border-bottom: none; }
+  .worlds-dropdown a:hover { background: var(--accent-dim); color: var(--accent); }
+  .worlds-dropdown span { color: rgba(240,237,232,0.2); cursor: default; }
+  .worlds-dropdown .soon {
+    font-size: 0.55rem; letter-spacing: 0.08em;
+    color: var(--accent); background: var(--accent-dim);
+    padding: 1px 5px; border-radius: 2px;
+  }
+  .worlds-dropdown .current { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    padding: 9rem 3rem 5rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 300; line-height: 0.95;
+    letter-spacing: -0.01em; margin-bottom: 1.5rem;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); font-weight: 600; }
+  .hero-sub {
+    font-size: 0.95rem; font-weight: 300;
+    color: var(--muted); max-width: 480px; line-height: 1.8;
+  }
+
+  /* SECTION SHARED */
+  .section { position: relative; z-index: 1; padding: 5rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; color: var(--text);
+    margin-bottom: 0.5rem; line-height: 1.1;
+  }
+  .section-rule { width: 36px; height: 1px; background: var(--accent-line); margin-bottom: 3rem; }
+
+  /* SPORT BOXES */
+  .sports-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .sport-box {
+    background: var(--surface);
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+    min-height: 280px;
+    display: flex; flex-direction: column;
+  }
+  .sport-box::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .sport-box:hover::before,
+  .sport-box.active::before { transform: scaleX(1); }
+  .sport-box:hover,
+  .sport-box.active { background: var(--surface2); }
+
+  .sport-img {
+    width: 100%; flex: 1;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--border);
+    min-height: 160px;
+    transition: background 0.3s;
+  }
+  .sport-box:hover .sport-img,
+  .sport-box.active .sport-img { background: #1e1e2a; }
+  .sport-img-placeholder {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+  }
+  .sport-img-icon { font-size: 2.5rem; opacity: 0.2; }
+  .sport-img-text {
+    font-size: 0.6rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted); opacity: 0.5;
+  }
+  .sport-info { padding: 1.25rem 1.5rem; }
+  .sport-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.25rem;
+  }
+  .sport-expand {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  .sport-arrow { transition: transform 0.3s; display: inline-block; }
+  .sport-box.active .sport-arrow { transform: rotate(90deg); }
+
+  /* DETAIL PANELS */
+  .sport-detail {
+    display: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--accent);
+    padding: 2.5rem; margin-top: 1px;
+    animation: fadeSlide 0.3s ease;
+  }
+  .sport-detail.open { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .detail-inner { max-width: 680px; }
+  .detail-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.25rem;
+  }
+  .detail-tag {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.25rem; display: block;
+  }
+  .detail-body {
+    font-size: 0.92rem; color: var(--muted);
+    line-height: 1.9; margin-bottom: 1.5rem;
+  }
+  .detail-close {
+    font-size: 0.68rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer;
+    border: 1px solid var(--border); padding: 0.35rem 0.85rem;
+    background: none; font-family: 'Outfit', sans-serif;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .detail-close:hover { color: var(--accent); border-color: var(--accent-line); }
+
+  /* ABOUT STRIP */
+  #about {
+    position: relative; z-index: 1;
+    padding: 6rem 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .about-img-placeholder {
+    width: 100%; aspect-ratio: 3/4;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.75rem;
+  }
+  .about-img-placeholder span { font-size: 3rem; opacity: 0.15; }
+  .about-img-placeholder p {
+    font-size: 0.68rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .about-tagline-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300;
+    font-style: italic; color: var(--accent);
+    line-height: 1.3; margin-bottom: 1.5rem;
+  }
+  .about-label {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300; color: var(--text);
+    line-height: 1.2; margin-bottom: 1.5rem;
+  }
+  .about-text {
+    font-size: 0.9rem; color: var(--muted); line-height: 1.9;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1;
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; color: rgba(240,237,232,0.22);
+  }
+  .footer-note { font-size: 0.68rem; color: rgba(240,237,232,0.15); letter-spacing: 0.08em; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .section { padding: 3.5rem 1.5rem; }
+    .sports-grid { grid-template-columns: repeat(2, 1fr); }
+    #about { padding: 4rem 1.5rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    footer { padding: 1.25rem 1.5rem; }
+  }
+  @media (max-width: 560px) {
+    .sports-grid { grid-template-columns: 1fr; }
+  }
+
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">← Back Home</a>
+  <div class="nav-title">The Athlete · Confident</div>
+  <div class="nav-worlds">
+    <button class="nav-worlds-btn" onclick="toggleWorldsMenu()" id="worldsBtn">
+      My Worlds <span class="chevron">▾</span>
+    </button>
+    <div class="worlds-dropdown" id="worldsMenu">
+      <a href="professional.html">The Professional</a>
+      <a href="athlete.html" class="current">The Athlete ✦</a>
+      <a href="seeker.html">The Seeker</a>
+      <span>The Curator <span class="soon">Soon</span></span>
+      <span>The Entrepreneur <span class="soon">Soon</span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow fade-in">The Athlete · Confident</div>
+  <h1 class="hero-title fade-in">The body<br>is the <em>first</em><br>commitment.</h1>
+  <p class="hero-sub fade-in">From national-level swimming to the weight room — this is the record of how I show up for my body. Honest, ongoing, and never finished.</p>
+</div>
+
+<section class="section" id="sports">
+  <div class="section-inner">
+    <div class="section-label fade-in">The pursuits</div>
+    <h2 class="section-title fade-in">What I train for</h2>
+    <div class="section-rule fade-in"></div>
+
+    <div class="sports-grid fade-in">
+
+      <div class="sport-box" id="box-0" onclick="toggleBox(0)">
+        <div class="sport-img">
+          <div class="sport-img-placeholder">
+            <span class="sport-img-icon">⚖</span>
+            <span class="sport-img-text">Add your photo here</span>
+          </div>
+        </div>
+        <div class="sport-info">
+          <div class="sport-name">Weight Loss Journey</div>
+          <div class="sport-expand">View detail <span class="sport-arrow">›</span></div>
+        </div>
+      </div>
+
+      <div class="sport-box" id="box-1" onclick="toggleBox(1)">
+        <div class="sport-img">
+          <div class="sport-img-placeholder">
+            <span class="sport-img-icon">🏊</span>
+            <span class="sport-img-text">Add your photo here</span>
+          </div>
+        </div>
+        <div class="sport-info">
+          <div class="sport-name">Swimming</div>
+          <div class="sport-expand">View detail <span class="sport-arrow">›</span></div>
+        </div>
+      </div>
+
+      <div class="sport-box" id="box-2" onclick="toggleBox(2)">
+        <div class="sport-img">
+          <div class="sport-img-placeholder">
+            <span class="sport-img-icon">🧘</span>
+            <span class="sport-img-text">Add your photo here</span>
+          </div>
+        </div>
+        <div class="sport-info">
+          <div class="sport-name">Hatha Yoga</div>
+          <div class="sport-expand">View detail <span class="sport-arrow">›</span></div>
+        </div>
+      </div>
+
+      <div class="sport-box" id="box-3" onclick="toggleBox(3)">
+        <div class="sport-img">
+          <div class="sport-img-placeholder">
+            <span class="sport-img-icon">🏋</span>
+            <span class="sport-img-text">Add your photo here</span>
+          </div>
+        </div>
+        <div class="sport-info">
+          <div class="sport-name">Power Lifting</div>
+          <div class="sport-expand">View detail <span class="sport-arrow">›</span></div>
+        </div>
+      </div>
+
+      <div class="sport-box" id="box-4" onclick="toggleBox(4)">
+        <div class="sport-img">
+          <div class="sport-img-placeholder">
+            <span class="sport-img-icon">🏔</span>
+            <span class="sport-img-text">Add your photo here</span>
+          </div>
+        </div>
+        <div class="sport-info">
+          <div class="sport-name">Trekking</div>
+          <div class="sport-expand">View detail <span class="sport-arrow">›</span></div>
+        </div>
+      </div>
+
+      <div class="sport-box" id="box-5" onclick="toggleBox(5)">
+        <div class="sport-img">
+          <div class="sport-img-placeholder">
+            <span class="sport-img-icon">⛳</span>
+            <span class="sport-img-text">Add your photo here</span>
+          </div>
+        </div>
+        <div class="sport-info">
+          <div class="sport-name">Golf</div>
+          <div class="sport-expand">View detail <span class="sport-arrow">›</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DETAIL PANELS -->
+    <div class="sport-detail" id="detail-0">
+      <div class="detail-inner">
+        <div class="detail-name">Weight Loss Journey</div>
+        <span class="detail-tag">Ongoing · Updated Monthly</span>
+        <p class="detail-body">This is the most honest thing on this page. The weight loss journey is not a transformation story — it is a work in progress. I am documenting every month: what I ate, how I moved, where I failed, and what I learned. There is no before and after here, only the middle. I believe that showing up imperfectly, consistently, is worth more than any dramatic result. This record exists to hold me accountable and to remind me that the process is the point.</p>
+        <button class="detail-close" onclick="closeBox(0)">Close ✕</button>
+      </div>
+    </div>
+
+    <div class="sport-detail" id="detail-1">
+      <div class="detail-inner">
+        <div class="detail-name">Swimming</div>
+        <span class="detail-tag">National Level · Backstroke · CBSE · 2012–2016</span>
+        <p class="detail-body">I grew up in the water. Swimming at national level — earning the Best Swimmer title at CBSE Saurashtra Zone and placing 4th in the National IM Relay — taught me what it means to train for something larger than a single moment. Backstroke was my style: you move forward without seeing where you are going, trusting your instincts and your training. I have not competed in years, but the water is still home. Getting back is on the list.</p>
+        <button class="detail-close" onclick="closeBox(1)">Close ✕</button>
+      </div>
+    </div>
+
+    <div class="sport-detail" id="detail-2">
+      <div class="detail-inner">
+        <div class="detail-name">Hatha Yoga</div>
+        <span class="detail-tag">Coming Soon · On the List</span>
+        <p class="detail-body">Hatha yoga has been on my mind for a while — the slow, deliberate practice of holding postures, building strength through stillness. Unlike power yoga, Hatha moves at a pace that forces you to pay attention. I am drawn to it because of how naturally it connects to the inner work I already do — Reiki, Vipassana, meditation. The body and the breath as one practice. I plan to begin formally and document it here when I do.</p>
+        <button class="detail-close" onclick="closeBox(2)">Close ✕</button>
+      </div>
+    </div>
+
+    <div class="sport-detail" id="detail-3">
+      <div class="detail-inner">
+        <div class="detail-name">Power Lifting</div>
+        <span class="detail-tag">Coming Soon · A Goal in Progress</span>
+        <p class="detail-body">Power lifting is a goal I have been circling for a while. There is something deeply appealing about a sport built entirely on how much you can lift — no aesthetics, no style points, just raw strength and technical precision. The squat, the bench, the deadlift. I want to compete eventually, but first I want to build the foundation properly, with a coach, with patience, without shortcuts. This section will come alive when I begin.</p>
+        <button class="detail-close" onclick="closeBox(3)">Close ✕</button>
+      </div>
+    </div>
+
+    <div class="sport-detail" id="detail-4">
+      <div class="detail-inner">
+        <div class="detail-name">Trekking</div>
+        <span class="detail-tag">Trails & Elevation</span>
+        <p class="detail-body">There is a particular kind of clarity that only comes from moving through difficult terrain on foot. Trekking strips everything back — no signal, no schedule, just the next step and the view it earns you. I have done a handful of trails and each one has left me quieter and more grounded than I arrived. The mountains have a way of putting the rest of life in perspective. More trails are planned. More is always planned.</p>
+        <button class="detail-close" onclick="closeBox(4)">Close ✕</button>
+      </div>
+    </div>
+
+    <div class="sport-detail" id="detail-5">
+      <div class="detail-inner">
+        <div class="detail-name">Golf</div>
+        <span class="detail-tag">Patience as a Practice</span>
+        <p class="detail-body">Golf is a sport that demands more patience than most people are willing to give. Every shot is a negotiation between your body, your mind, and the conditions in front of you. I am drawn to it for exactly this reason — it rewards the long game in every sense. The learning curve is real and humbling, and that is precisely what makes it interesting. A sport where you are always competing against yourself first.</p>
+        <button class="detail-close" onclick="closeBox(5)">Close ✕</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section id="about">
+  <div class="about-inner">
+    <div class="fade-in">
+      <div class="about-img-placeholder">
+        <span>🏃</span>
+        <p>Your photo here</p>
+      </div>
+    </div>
+    <div class="fade-in">
+      <div class="about-label">Why it matters</div>
+      <div class="about-tagline-text">The body keeps the score.</div>
+      <h3 class="about-heading">Sport is not separate<br>from everything else.</h3>
+      <p class="about-text">Physical discipline is the foundation I build everything else on. Sport taught me how to lose well, train without guaranteed outcomes, and show up when the motivation is gone. Sportsmanship — respecting the game, the opponent, and yourself — is a philosophy that transfers to every boardroom, every negotiation, every hard conversation. I believe that how you move through the world physically shapes how you move through it in every other way. The body and the mind are not separate projects.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Akhila Shastry — The Athlete</div>
+  <div class="footer-note">One step at a time · © 2025</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  function toggleWorldsMenu() {
+    document.getElementById('worldsMenu').classList.toggle('open');
+    document.getElementById('worldsBtn').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.querySelector('.nav-worlds');
+    if (!nav.contains(e.target)) {
+      document.getElementById('worldsMenu').classList.remove('open');
+      document.getElementById('worldsBtn').classList.remove('open');
+    }
+  });
+
+  let activeBox = null;
+  function toggleBox(i) {
+    const detail = document.getElementById('detail-' + i);
+    const box = document.getElementById('box-' + i);
+    if (activeBox !== null && activeBox !== i) {
+      document.getElementById('detail-' + activeBox).classList.remove('open');
+      document.getElementById('box-' + activeBox).classList.remove('active');
+    }
+    if (detail.classList.contains('open')) {
+      detail.classList.remove('open');
+      box.classList.remove('active');
+      activeBox = null;
+    } else {
+      detail.classList.add('open');
+      box.classList.add('active');
+      activeBox = i;
+      setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 120);
+    }
+  }
+  function closeBox(i) {
+    document.getElementById('detail-' + i).classList.remove('open');
+    document.getElementById('box-' + i).classList.remove('active');
+    activeBox = null;
+  }
+</script>
+</body>
+</html>
