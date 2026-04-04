@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Curator — Akhila Shastry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf8;
+    --surface: #ffffff;
+    --surface2: #f4f3ef;
+    --gold: #c9a96e;
+    --gold-dim: rgba(201,169,110,0.1);
+    --gold-line: rgba(201,169,110,0.3);
+    --text: #1a1a18;
+    --muted: #6b6760;
+    --border: rgba(26,26,24,0.09);
+    --rule: rgba(26,26,24,0.05);
+    --grey: #e3e2e1;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(250,250,248,0.95);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--text); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-right {
+    display: flex; align-items: center; gap: 0.25rem;
+  }
+  .nav-link {
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    padding: 0.4rem 0.85rem;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-divider { color: var(--border); font-size: 0.8rem; padding: 0 0.1rem; }
+
+  /* Worlds dropdown */
+  .nav-worlds { position: relative; }
+  .nav-worlds-btn {
+    display: flex; align-items: center; gap: 0.35rem;
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); background: none; border: none;
+    font-family: 'Outfit', sans-serif; cursor: pointer;
+    transition: color 0.2s; padding: 0.4rem 0.85rem;
+  }
+  .nav-worlds-btn:hover { color: var(--text); }
+  .nav-worlds-btn .chevron { font-size: 0.6rem; transition: transform 0.2s; }
+  .nav-worlds-btn.open .chevron { transform: rotate(180deg); }
+  .worlds-dropdown {
+    display: none;
+    position: absolute; top: calc(100% + 0.6rem); right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    min-width: 200px;
+    animation: fadeDown 0.2s ease;
+    z-index: 200;
+    box-shadow: 0 8px 24px rgba(26,26,24,0.08);
+  }
+  .worlds-dropdown.open { display: block; }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .worlds-dropdown a,
+  .worlds-dropdown span {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.2s, color 0.2s; cursor: pointer;
+  }
+  .worlds-dropdown a:last-child,
+  .worlds-dropdown span:last-child { border-bottom: none; }
+  .worlds-dropdown a:hover { background: var(--gold-dim); color: var(--gold); }
+  .worlds-dropdown span { color: rgba(26,26,24,0.25); cursor: default; }
+  .worlds-dropdown .soon {
+    font-size: 0.55rem; letter-spacing: 0.08em;
+    color: var(--gold); background: var(--gold-dim);
+    padding: 1px 5px; border-radius: 2px;
+  }
+  .worlds-dropdown .current { color: var(--gold); font-weight: 500; }
+  .nav-contact {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border: 1px solid var(--gold-line);
+    padding: 0.4rem 0.85rem;
+    transition: background 0.2s;
+  }
+  .nav-contact:hover { background: var(--gold-dim); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    padding: 9rem 3rem 5rem;
+    max-width: 900px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 300; line-height: 0.95;
+    letter-spacing: -0.01em; margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+  .hero-title em { font-style: italic; color: var(--gold); font-weight: 600; }
+  .hero-sub {
+    font-size: 0.95rem; font-weight: 300;
+    color: var(--muted); max-width: 480px; line-height: 1.8;
+  }
+
+  /* ── SECTION SHARED ── */
+  .section { padding: 5rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* ── ACCORDION ── */
+  .accordion-wrap {
+    max-width: 1100px; margin: 5rem auto;
+    padding: 0 3rem;
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+  }
+  .accordion-item { background: var(--surface); }
+  .accordion-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2rem; cursor: pointer;
+    transition: background 0.2s; user-select: none;
+  }
+  .accordion-header:hover { background: var(--gold-dim); }
+  .accordion-header-left { display: flex; align-items: center; gap: 1.25rem; }
+  .accordion-icon { font-size: 1.5rem; opacity: 0.5; }
+  .accordion-label {
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .accordion-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; color: var(--text);
+  }
+  .accordion-desc { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+  .accordion-arrow {
+    font-size: 1rem; color: var(--gold);
+    transition: transform 0.3s ease; flex-shrink: 0;
+  }
+  .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+  .accordion-body {
+    display: none; padding: 0 2rem 2rem;
+    border-top: 1px solid var(--border);
+    animation: fadeSlide 0.3s ease;
+  }
+  .accordion-item.open .accordion-body { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── BOOK REVIEWS GRID ── */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .book-item {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .book-item:hover { transform: translateY(-3px); }
+  .book-cover {
+    width: 100%; aspect-ratio: 2/3;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.5rem;
+    margin-bottom: 0.6rem;
+    position: relative; overflow: hidden;
+  }
+  .book-cover::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: var(--gold); opacity: 0.4;
+  }
+  .book-cover-icon { font-size: 1.5rem; opacity: 0.2; }
+  .book-cover-text {
+    font-size: 0.55rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); opacity: 0.6;
+  }
+  .book-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--text); line-height: 1.3; margin-bottom: 0.2rem;
+  }
+  .book-author {
+    font-size: 0.72rem; color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .book-rating { display: flex; gap: 2px; }
+  .star { font-size: 0.6rem; color: var(--gold); }
+  .star.empty { color: var(--grey); }
+
+  /* add book placeholder */
+  .book-add {
+    cursor: pointer; opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+  .book-add:hover { opacity: 0.7; }
+  .book-add .book-cover {
+    border: 1px dashed var(--border);
+    background: transparent;
+  }
+  .book-add-icon { font-size: 1.2rem; color: var(--muted); }
+  .book-add-text {
+    font-size: 0.62rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ── ORG BOARDS ── */
+  .boards-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .board-item {
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem;
+    transition: background 0.2s;
+  }
+  .board-item:hover { background: var(--gold-dim); }
+  .board-left { flex: 1; }
+  .board-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.2rem;
+  }
+  .board-desc {
+    font-size: 0.78rem; color: var(--muted); line-height: 1.5;
+  }
+  .board-tag {
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); background: var(--gold-dim);
+    padding: 2px 7px; border-radius: 2px;
+    margin-top: 0.4rem; display: inline-block;
+  }
+  .board-download {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border: 1px solid var(--gold-line);
+    padding: 0.45rem 0.9rem; white-space: nowrap;
+    transition: background 0.2s; flex-shrink: 0;
+    cursor: pointer; background: transparent;
+    font-family: 'Outfit', sans-serif;
+  }
+  .board-download:hover { background: var(--gold-dim); }
+  .coming-soon-board {
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--border);
+    padding: 0.45rem 0.9rem; white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* ── BOOK DETAIL MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(250,250,248,0.9);
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    padding: 2.5rem; max-width: 480px; width: 90%;
+    animation: fadeUp 0.3s ease;
+    box-shadow: 0 16px 48px rgba(26,26,24,0.12);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal-label {
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.2rem; line-height: 1.2;
+  }
+  .modal-author {
+    font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem;
+  }
+  .modal-rating { display: flex; gap: 3px; margin-bottom: 1.25rem; }
+  .modal-rating .star { font-size: 0.75rem; }
+  .modal-body {
+    font-size: 0.88rem; color: var(--muted);
+    line-height: 1.9; margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+  }
+  .modal-close {
+    font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer;
+    background: none; border: 1px solid var(--border);
+    padding: 0.4rem 0.85rem; font-family: 'Outfit', sans-serif;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .modal-close:hover { color: var(--gold); border-color: var(--gold-line); }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--text); color: var(--bg);
+    padding: 5rem 3rem;
+  }
+  .contact-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .contact-label {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; color: var(--bg);
+    line-height: 1.1; margin-bottom: 0.75rem;
+  }
+  .contact-rule { width: 36px; height: 1px; background: var(--gold-line); margin-bottom: 1.5rem; }
+  .contact-body {
+    font-size: 0.9rem; color: rgba(250,250,248,0.55);
+    font-weight: 300; line-height: 1.9;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-form input,
+  .contact-form textarea {
+    background: rgba(250,250,248,0.05);
+    border: 1px solid rgba(250,250,248,0.1);
+    padding: 0.85rem 1rem; color: var(--bg);
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.2s; resize: vertical;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(250,250,248,0.3); }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--gold); }
+  .contact-form textarea { min-height: 110px; }
+  .btn-send {
+    padding: 0.85rem 2rem; background: var(--gold);
+    color: var(--text); border: none;
+    font-family: 'Outfit', sans-serif; font-size: 0.82rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: opacity 0.2s; align-self: flex-start;
+  }
+  .btn-send:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 1.5rem 3rem; background: var(--text);
+    border-top: 1px solid rgba(250,250,248,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; color: rgba(250,250,248,0.25);
+  }
+  .footer-note { font-size: 0.68rem; color: rgba(250,250,248,0.18); letter-spacing: 0.08em; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .big-cards { grid-template-columns: 1fr; padding: 0 1.5rem; margin: 3rem auto; }
+    .books-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    #contact { padding: 4rem 1.5rem; }
+    footer { padding: 1.25rem 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    .books-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-right .nav-link { display: none; }
+  }
+
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Akhila Shastry</a>
+  <div class="nav-right">
+    <a href="#about" class="nav-link">About Me</a>
+    <span class="nav-divider">·</span>
+    <div class="nav-worlds">
+      <button class="nav-worlds-btn" onclick="toggleWorldsMenu()" id="worldsBtn">
+        My Worlds <span class="chevron">▾</span>
+      </button>
+      <div class="worlds-dropdown" id="worldsMenu">
+        <a href="professional.html">The Professional</a>
+        <a href="athlete.html">The Athlete</a>
+        <a href="seeker.html">The Seeker</a>
+        <a href="curator.html" class="current">The Curator ✦</a>
+        <span>The Entrepreneur <span class="soon">Soon</span></span>
+      </div>
+    </div>
+    <span class="nav-divider">·</span>
+    <a href="#contact" class="nav-contact">Contact Me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow fade-in">The Curator · Clear</div>
+  <h1 class="hero-title fade-in">What I read.<br>How I <em>organise.</em></h1>
+  <p class="hero-sub fade-in">Books shape how I think. Systems shape how I live. This is where I share both — the ideas I'm absorbing and the tools I use to stay clear.</p>
+</div>
+
+<!-- ACCORDION -->
+<div class="accordion-wrap">
+
+  <!-- BOOK REVIEWS -->
+  <div class="accordion-item" id="acc-books">
+    <div class="accordion-header" onclick="toggleAccordion('books')">
+      <div class="accordion-header-left">
+        <span class="accordion-icon">📚</span>
+        <div>
+          <div class="accordion-label">Reading</div>
+          <div class="accordion-title">Book Reviews</div>
+          <div class="accordion-desc">Books I've read, what stayed with me, and an honest rating.</div>
+        </div>
+      </div>
+      <span class="accordion-arrow">▾</span>
+    </div>
+    <div class="accordion-body">
+      <div class="books-grid" style="margin-top: 1.5rem;">
+
+        <div class="book-item" onclick="openBook(0)">
+          <div class="book-cover">
+            <span class="book-cover-icon">📖</span>
+            <span class="book-cover-text">Add cover</span>
+          </div>
+          <div class="book-title">The Subtle Art of Not Giving a F*ck</div>
+          <div class="book-author">Mark Manson</div>
+          <div class="book-rating">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+          </div>
+        </div>
+
+        <div class="book-item" onclick="openBook(1)">
+          <div class="book-cover">
+            <span class="book-cover-icon">📖</span>
+            <span class="book-cover-text">Add cover</span>
+          </div>
+          <div class="book-title">Atomic Habits</div>
+          <div class="book-author">James Clear</div>
+          <div class="book-rating">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+        </div>
+
+        <div class="book-item" onclick="openBook(2)">
+          <div class="book-cover">
+            <span class="book-cover-icon">📖</span>
+            <span class="book-cover-text">Add cover</span>
+          </div>
+          <div class="book-title">The Alchemist</div>
+          <div class="book-author">Paulo Coelho</div>
+          <div class="book-rating">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+        </div>
+
+        <div class="book-add">
+          <div class="book-cover">
+            <span class="book-add-icon">+</span>
+            <span class="book-add-text">Add book</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ORG BOARDS -->
+  <div class="accordion-item" id="acc-boards">
+    <div class="accordion-header" onclick="toggleAccordion('boards')">
+      <div class="accordion-header-left">
+        <span class="accordion-icon">📋</span>
+        <div>
+          <div class="accordion-label">Systems</div>
+          <div class="accordion-title">Org Boards</div>
+          <div class="accordion-desc">Personal templates I use to stay organised. Download any board and make it your own.</div>
+        </div>
+      </div>
+      <span class="accordion-arrow">▾</span>
+    </div>
+    <div class="accordion-body">
+      <div class="boards-list" style="margin-top: 1.5rem;">
+
+        <div class="board-item">
+          <div class="board-left">
+            <div class="board-name">Personal Budget Tracker</div>
+            <div class="board-desc">Monthly income, fixed expenses, variable spending and savings — all in one sheet.</div>
+            <span class="board-tag">Finance</span>
+          </div>
+          <button class="board-download" onclick="downloadBoard('budget')">↓ Download</button>
+        </div>
+
+        <div class="board-item">
+          <div class="board-left">
+            <div class="board-name">Weight Loss Tracker</div>
+            <div class="board-desc">Weekly weight, meals, movement and mood — to spot patterns over time.</div>
+            <span class="board-tag">Health</span>
+          </div>
+          <button class="board-download" onclick="downloadBoard('weightloss')">↓ Download</button>
+        </div>
+
+        <div class="board-item">
+          <div class="board-left">
+            <div class="board-name">Time Blocking Planner</div>
+            <div class="board-desc">Daily time blocks across work, personal, health and rest — so nothing gets squeezed out.</div>
+            <span class="board-tag">Productivity</span>
+          </div>
+          <button class="board-download" onclick="downloadBoard('timeblocking')">↓ Download</button>
+        </div>
+
+        <div class="board-item">
+          <div class="board-left">
+            <div class="board-name">Dating Checklist</div>
+            <div class="board-desc">A personal framework for knowing what you want and evaluating compatibility clearly.</div>
+            <span class="board-tag">Personal</span>
+          </div>
+          <button class="board-download" onclick="downloadBoard('dating')">↓ Download</button>
+        </div>
+
+        <div class="board-item">
+          <div class="board-left">
+            <div class="board-name">Goal Tracker</div>
+            <div class="board-desc">Quarterly goals broken into monthly milestones with a weekly check-in column.</div>
+            <span class="board-tag">Growth</span>
+          </div>
+          <span class="coming-soon-board">Coming soon</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOOK DETAIL MODALS -->
+<div class="modal-overlay" id="bookModal" onclick="closeBookIfOutside(event)">
+  <div class="modal" id="modalContent">
+    <div class="modal-label" id="modalLabel">Book Review</div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-author" id="modalAuthor"></div>
+    <div class="modal-rating" id="modalRating"></div>
+    <p class="modal-body" id="modalBody"></p>
+    <button class="modal-close" onclick="closeBook()">Close ✕</button>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="fade-in">
+      <div class="contact-label">Get in touch</div>
+      <h2 class="contact-title">Want to talk books,<br>systems or strategy?</h2>
+      <div class="contact-rule"></div>
+      <p class="contact-body">Whether you want to recommend a book, have a question about the org boards, or just want to connect — reach out. I read every message.</p>
+    </div>
+    <div class="fade-in">
+      <div class="contact-form">
+        <input type="text" placeholder="Your name">
+        <input type="email" placeholder="Your email">
+        <textarea placeholder="Say something..."></textarea>
+        <button class="btn-send" onclick="sendForm()">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Akhila Shastry — The Curator</div>
+  <div class="footer-note">One step at a time · © 2025</div>
+</footer>
+
+<script>
+  // FADE IN
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // ACCORDION
+  function toggleAccordion(id) {
+    const item = document.getElementById('acc-' + id);
+    item.classList.toggle('open');
+  }
+  function toggleWorldsMenu() {
+    document.getElementById('worldsMenu').classList.toggle('open');
+    document.getElementById('worldsBtn').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.querySelector('.nav-worlds');
+    if (nav && !nav.contains(e.target)) {
+      document.getElementById('worldsMenu').classList.remove('open');
+      document.getElementById('worldsBtn').classList.remove('open');
+    }
+  });
+
+  // BOOK DATA — edit these to match your actual books
+  const books = [
+    {
+      title: "The Subtle Art of Not Giving a F*ck",
+      author: "Mark Manson",
+      rating: 4,
+      review: "A counterintuitive approach to living a good life. Manson argues that the key to living well is not caring about more things, but caring about fewer things — and caring about them deeply. What stuck with me: the idea that suffering is inevitable, so choose your struggles wisely. Not always comfortable to read, but honest in a way most self-help books aren't. Recommended for anyone tired of toxic positivity."
+    },
+    {
+      title: "Atomic Habits",
+      author: "James Clear",
+      rating: 5,
+      review: "The most practical book I've read on behaviour change. Clear's central insight — that habits are the compound interest of self-improvement — is simple but the implications are profound. The 1% better every day framework changed how I approach everything from my morning routine to how I structure my work. The section on identity-based habits is worth the entire book. I return to chapters of this regularly."
+    },
+    {
+      title: "The Alchemist",
+      author: "Paulo Coelho",
+      rating: 5,
+      review: "A book I return to every few years and always find something new in it. The story of Santiago is simple on the surface — a boy in search of treasure — but it is really about learning to follow what calls you, even when the path isn't clear. The line that has stayed with me longest: when you want something, all the universe conspires in helping you to achieve it. Deceptively simple. Quietly profound."
+    }
+  ];
+
+  function openBook(i) {
+    const b = books[i];
+    document.getElementById('modalTitle').textContent = b.title;
+    document.getElementById('modalAuthor').textContent = b.author;
+    document.getElementById('modalBody').textContent = b.review;
+    const rating = document.getElementById('modalRating');
+    rating.innerHTML = '';
+    for (let s = 1; s <= 5; s++) {
+      const star = document.createElement('span');
+      star.className = 'star' + (s > b.rating ? ' empty' : '');
+      star.textContent = '★';
+      rating.appendChild(star);
+    }
+    document.getElementById('bookModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeBook() {
+    document.getElementById('bookModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeBookIfOutside(e) {
+    if (e.target === document.getElementById('bookModal')) closeBook();
+  }
+
+  // DOWNLOAD BOARDS — replace hrefs with actual file links when ready
+  function downloadBoard(type) {
+    alert('The ' + type + ' board will be available for download soon. Check back shortly!');
+  }
+
+  // CONTACT FORM
+  function sendForm() {
+    window.location.href = 'mailto:cakhila98@gmail.com?subject=Hello from The Curator page';
+  }
+</script>
+</body>
+</html>
