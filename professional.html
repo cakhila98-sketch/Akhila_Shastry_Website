@@ -1,3 +1,4 @@
+@@ -0,0 +1,939 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,23 +36,22 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.1rem 3rem;
-    background: rgba(10,10,15,0.92);
-    border-bottom: 1px solid rgba(240,237,232,0.08);
-    backdrop-filter: blur(12px);
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
   }
   .nav-back {
+    display: flex; align-items: center; gap: 0.5rem;
     text-decoration: none; color: var(--muted);
-    font-size: 0.78rem; font-weight: 400;
-    letter-spacing: 0.1em; text-transform: uppercase;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
     transition: color 0.2s;
   }
-  .nav-back:hover { color: #c9a96e; }
+  .nav-back:hover { color: var(--blue); }
   .nav-back::before { content: '←'; font-size: 0.9rem; }
   .nav-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem; font-weight: 600;
-    color: #f0ede8; letter-spacing: 0.06em;
-    position: absolute; left: 50%; transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--black); text-decoration: none;
   }
   .nav-cta {
     font-size: 0.78rem; font-weight: 500;
@@ -61,24 +61,6 @@
     padding-bottom: 1px; transition: opacity 0.2s;
   }
   .nav-cta:hover { opacity: 0.7; }
-
-  /* ADD BELOW */
-  .nav-worlds-btn {
-  display: flex; align-items: center; gap: 0.4rem;
-  font-size: 0.78rem; font-weight: 400;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); background: none; border: none;
-  cursor: pointer;
-}
-.nav-worlds-btn:hover { color: #c9a96e; }
-
-  .worlds-dropdown {
-  display: none;
-  position: absolute; top: calc(100% + 0.75rem); right: 0;
-  background: #13131a;
-  border: 1px solid rgba(240,237,232,0.08);
-}
-.worlds-dropdown.open { display: block; }
 
   /* HERO */
   .hero {
@@ -376,22 +358,9 @@
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-back">← Back Home</a>
-
-  <div class="nav-title">Akhila Shastry</div>
-
-  <div class="nav-worlds">
-    <button class="nav-worlds-btn" onclick="toggleWorldsMenu()" id="worldsBtn">
-      My Worlds <span class="chevron">▾</span>
-    </button>
-    <div class="worlds-dropdown" id="worldsMenu">
-      <a href="professional.html" class="current">The Professional ✦</a>
-      <a href="athlete.html">The Athlete</a>
-      <a href="seeker.html">The Seeker</a>
-      <span>The Curator <span class="soon">Soon</span></span>
-      <span>The Entrepreneur <span class="soon">Soon</span></span>
-    </div>
-  </div>
+  <a href="index.html" class="nav-back">Home</a>
+  <a href="index.html" class="nav-name">Akhila Shastry</a>
+  <a href="#contact" class="nav-cta">Reach Out</a>
 </nav>
 
 <!-- HERO -->
