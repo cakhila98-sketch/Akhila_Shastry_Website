@@ -311,27 +311,22 @@
       <span class="world-arrow">→</span>
     </a>
 
-    <div class="world-tile world-coming" onclick="showToast()">
-      <span class="world-soon">Coming soon</span>
+    <a href="curator.html" class="world-tile">
       <div class="world-num">04</div>
       <div class="world-name">The Curator</div>
       <div class="world-c">Clear</div>
       <span class="world-arrow">→</span>
-    </div>
+    </a>
 
-    <div class="world-tile world-coming" onclick="showToast()">
-      <span class="world-soon">Coming soon</span>
+    <a href="entrepreneur.html" class="world-tile">
       <div class="world-num">05</div>
       <div class="world-name">The Entrepreneur</div>
       <div class="world-c">Curious</div>
       <span class="world-arrow">→</span>
-    </div>
+    </a>
 
   </div>
 </div>
-
-<!-- TOAST -->
-<div class="toast" id="toast">This world is being built — check back soon.</div>
 
 <footer>
   <div class="footer-name">Akhila Shastry</div>
@@ -350,14 +345,6 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
-  // Toast for coming soon
-  let toastTimer;
-  function showToast() {
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
-  }
 </script>
 </body>
 </html>
